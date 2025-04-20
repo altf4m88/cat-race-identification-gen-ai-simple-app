@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Breed Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-container {
+            flex: 1;
+        }
+        .result-container {
+            flex: 1;
+        }
+        .uploaded-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+        /* Markdown styling */
+        .markdown-content {
+            line-height: 1.6;
+        }
+        .markdown-content ul {
+            padding-left: 20px;
+        }
+        .markdown-content p {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cat Breed Analyzer</h1>
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <input type="submit" value="Analyze Image">
+    </form>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+    <div class="container">
+        <div class="image-container">
+            <img src="data:image/jpeg;base64,{{ image_b64 }}" alt="Uploaded cat image" class="uploaded-image">
+        </div>
+        <div class="result-container">
+            <div class="markdown-content">
+                {{ result|markdown }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
